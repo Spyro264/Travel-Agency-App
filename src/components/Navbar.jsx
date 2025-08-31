@@ -5,6 +5,7 @@ import logo from "../assets/images/logo.jpg";
 import Sidebar from "./Sidebar";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import Header from "./Header";
 
 const Navbar = () => {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -37,24 +38,8 @@ const Navbar = () => {
           flexDirection={"column"}
           padding={{ xs: 1, md: 1 }}
         >
-          <Box
-            display={{ xs: "none", md: "flex" }}
-            justifyContent={"flex-start"}
-            alignItems={"flex-start"}
-            flexDirection={"column"}
-          >
-            <Typography variant="h4" fontWeight={900} fontFamily={"sans-serif"}>
-              Welcome Nagaraj
-            </Typography>
-            <Typography
-              variant="body2"
-              color="grey"
-              fontWeight={500}
-              fontFamily={"monospace"}
-            >
-              Track activity,trends and popular destinations in real time.
-            </Typography>
-          </Box>
+          {/* {Headerr} */}
+          <Header />
 
           {/* {icon and logo for small devices} */}
           <Box

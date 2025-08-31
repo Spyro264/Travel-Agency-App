@@ -2,19 +2,33 @@ import { Box, Button, Typography, IconButton } from "@mui/material";
 import { side_bar_items } from "../constants";
 import logo from "../assets/images/logo.jpg";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 const Sidebar = ({ open }) => {
   const [style, setStyle] = useState({ bgColor: "", color: "" });
   const [indexVal, setIndexVal] = useState(0);
+  const navigate = useNavigate();
 
-  const handleClick = (index) => {
+  const handleClick = (index, item) => {
     setIndexVal(index);
     setStyle({ bgColor: "#256FF1", color: "white" });
+    // navigates based on click
+    if (item?.name === "Dashboard") {
+      navigate("/");
+    } else if (item?.name === "All Users") {
+      navigate("/all-users");
+    } else {
+      navigate("/ai-trips");
+    }
   };
 
-  useEffect(() => {
-    handleClick(0);
-  }, []);
+  // runs on first render only
+  // useEffect(() => {
+  //   handleClick(0);
+  //   navigate("/");
+  // }, []);
 
   return (
     <>
@@ -78,36 +92,55 @@ const SidebarContent = ({ indexVal, handleClick, style }) => (
       </Typography>
     </Box>
 
-    {/* Sidebar Items */}
     <Box
-      width={"90%"}
-      padding={1}
+      height={"80vh"}
       display={"flex"}
+      justifyContent={"space-between"}
+      alignItems={"flex-start"}
       flexDirection={"column"}
-      gap={2}
-      mt={3}
     >
-      {side_bar_items?.map((item, index) => (
-        <Button
-          key={index}
-          startIcon={item.Icon}
-          sx={{
-            minWidth: "max-content",
-            textTransform: "none",
-            justifyContent: "flex-start",
-            width: { xs: 150, md: 200 },
-            fontSize: "1rem",
-            fontWeight: 800,
-            padding: { xs: 1, md: 2 },
-            border: index !== indexVal && "1px solid #256FF1",
-            backgroundColor: index === indexVal ? style.bgColor : "",
-            color: index === indexVal ? style.color : "",
-          }}
-          onClick={() => handleClick(index)}
-        >
-          {item.name}
+      {/* Sidebar Items */}
+      <Box padding={1} display={"flex"} flexDirection={"column"} gap={2} mt={3}>
+        {side_bar_items?.map((item, index) => (
+          <Button
+            key={index}
+            startIcon={item.Icon}
+            sx={{
+              minWidth: "max-content",
+              textTransform: "none",
+              justifyContent: "flex-start",
+              width: { xs: 150, md: 200 },
+              fontSize: "1rem",
+              fontWeight: 800,
+              padding: { xs: 1, md: 1 },
+              paddingX: { md: 2 },
+              border: index !== indexVal && "1px solid #256FF1",
+              backgroundColor: index === indexVal ? style.bgColor : "",
+              color: index === indexVal ? style.color : "",
+            }}
+            onClick={() => handleClick(index, item)}
+          >
+            {item.name}
+          </Button>
+        ))}
+      </Box>
+
+      {/* {login-logout} */}
+      <Box
+        padding={1}
+        display={"flex"}
+        justifyContent={"flex-start"}
+        alignItems={"flex-start"}
+        flexDirection={"column"}
+        gap={1}
+      >
+        <Button variant="contained" sx={{ width: 110 }}>
+          Login
         </Button>
-      ))}
+        <Button variant="contained" sx={{ width: 110 }}>
+          Sign up
+        </Button>
+      </Box>
     </Box>
   </>
 );
