@@ -25,10 +25,10 @@ const Sidebar = ({ open }) => {
   };
 
   // runs on first render only
-  // useEffect(() => {
-  //   handleClick(0);
-  //   navigate("/");
-  // }, []);
+  useEffect(() => {
+    handleClick(0);
+    navigate("/");
+  }, []);
 
   return (
     <>
