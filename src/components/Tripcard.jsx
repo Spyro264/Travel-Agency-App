@@ -10,7 +10,7 @@ const Tripcard = () => {
           <Grid
             key={index}
             item
-            size={{ xs: 12, md: 3 }}
+            size={{ xs: 12, sm: 6, md: 6, lg: 3 }}
             boxShadow={4}
             borderRadius={2}
           >
@@ -36,7 +36,12 @@ const Tripcard = () => {
               flexDirection="column"
               gap={1}
             >
-              <Typography variant="h6" fontWeight={900} mb={0}>
+              <Typography
+                variant="h6"
+                fontWeight={900}
+                mb={0}
+                // border={"2px solid red"}
+              >
                 {item.title}
               </Typography>
               <Typography color="grey" m={0} p={0}>
