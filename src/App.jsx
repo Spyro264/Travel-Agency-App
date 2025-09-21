@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Allusers from "./pages/Allusers";
 import AItrips from "./pages/AItrips";
+import SignIn from "./pages/SignIn";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/" element={<Dashboard />} />
         <Route path="/all-users" element={<Allusers />} />
         <Route path="/ai-trips" element={<AItrips />} />
+        <Route path="/sign-in" element={<SignIn />} />
       </Routes>
     </Box>
   );

@@ -2,14 +2,23 @@ import { Box, Button, Typography, IconButton } from "@mui/material";
 import { side_bar_items } from "../constants";
 import logo from "../assets/images/logo.jpg";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
+import { useLocation, useNavigate } from "react-router-dom";
+import { logoutUser } from "../appwrite/auth";
 
 const Sidebar = ({ open }) => {
   const [style, setStyle] = useState({ bgColor: "", color: "" });
   const [indexVal, setIndexVal] = useState(0);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // const [user, setUser] = useState(null);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const loggedInUser = await storeUserdata();
+  //     setUser(loggedInUser);
+  //   })();
+  // }, []);
 
   const handleClick = (index, item) => {
     setIndexVal(index);
@@ -24,6 +33,19 @@ const Sidebar = ({ open }) => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const result = await logoutUser();
+      if (result) {
+        navigate("/sign-in");
+      } else {
+        console.log("logout failed");
+      }
+    } catch (e) {
+      console.log("logout issue");
+    }
+  };
+
   // runs on first render only
   useEffect(() => {
     handleClick(0);
@@ -32,57 +54,70 @@ const Sidebar = ({ open }) => {
 
   return (
     <>
-      {/* Sidebar for large screens */}
-      <Box
-        boxShadow={1}
-        sx={{
-          position: "fixed",
-          top: 12,
-          left: 0,
-          zIndex: 1200,
-          backgroundColor: "white",
-          width: 250,
-          ml: 1,
-          minHeight: "100vh",
-          display: { xs: "none", md: "flex" },
-          flexDirection: "column",
-        }}
-      >
-        <SidebarContent
-          indexVal={indexVal}
-          handleClick={handleClick}
-          style={style}
-        />
-      </Box>
-
-      {/* Sidebar for small screens */}
-      <Box
-        sx={{
-          position: "fixed",
-          top: 20,
-          left: open ? 0 : "-100%",
-          width: 200,
-          minHeight: "100vh",
-          backgroundColor: "white",
-          boxShadow: 1,
-          borderRadius: 3,
-          zIndex: 1300,
-          transition: "left 0.3s ease-in-out",
-          display: { xs: "flex", md: "none" },
-          flexDirection: "column",
-        }}
-      >
-        <SidebarContent
-          indexVal={indexVal}
-          handleClick={handleClick}
-          style={style}
-        />
-      </Box>
+      {/* // Sidebar for large screens  */}
+      {!location.pathname.includes("/sign-in") && (
+        <>
+          <Box
+            boxShadow={1}
+            sx={{
+              position: "fixed",
+              top: 12,
+              left: 0,
+              zIndex: 1200,
+              backgroundColor: "white",
+              width: 250,
+              ml: 1,
+              minHeight: "100vh",
+              display: { xs: "none", md: "flex" },
+              flexDirection: "column",
+            }}
+          >
+            <SidebarContent
+              indexVal={indexVal}
+              handleClick={handleClick}
+              style={style}
+              navigate={navigate}
+              handleLogout={handleLogout}
+            />
+          </Box>
+          {/* // small screen side bar */}
+          <Box
+            sx={{
+              position: "fixed",
+              top: 20,
+              left: open ? 0 : "-100%",
+              width: 200,
+              minHeight: "100vh",
+              backgroundColor: "white",
+              boxShadow: 1,
+              borderRadius: 3,
+              zIndex: 1300,
+              transition: "left 0.3s ease-in-out",
+              display: { xs: "flex", md: "none" },
+              flexDirection: "column",
+            }}
+          >
+            <SidebarContent
+              indexVal={indexVal}
+              handleClick={handleClick}
+              style={style}
+              navigate={navigate}
+              handleLogout={handleLogout}
+            />
+          </Box>
+        </>
+      )}
     </>
   );
 };
 
-const SidebarContent = ({ indexVal, handleClick, style }) => (
+const SidebarContent = ({
+  indexVal,
+  handleClick,
+  style,
+  navigate,
+  handleLogout,
+}) => (
   <>
     {/* Logo */}
     <Box display="flex" alignItems="center" gap={1} padding={1}>
@@ -134,10 +169,14 @@ const SidebarContent = ({ indexVal, handleClick, style }) => (
         flexDirection={"column"}
         gap={1}
       >
-        <Button variant="contained" sx={{ width: 110 }}>
-          Login
+        <Button variant="contained" sx={{ width: 110 }} onClick={handleLogout}>
+          Logout
         </Button>
-        <Button variant="contained" sx={{ width: 110 }}>
+        <Button
+          variant="contained"
+          sx={{ width: 110 }}
+          onClick={() => navigate("/sign-in")}
+        >
           Sign up
         </Button>
       </Box>

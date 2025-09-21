@@ -6,7 +6,7 @@ const Header = () => {
   const location = useLocation();
   const path_name = location.pathname || "";
 
-  const current_page = pageInfo.find((page) => page.path === path_name);
+  const current_page = pageInfo.find((page) => page.path === path_name) || "";
 
   return (
     <Box

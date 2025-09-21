@@ -18,16 +18,20 @@ export const getUser = async () => {
     if (documents.length === 0) return null;
     return documents[0];
   } catch (e) {
-    console.log("getUser", e);
+    console.log("getUser");
   }
 };
 
 // LoginWithGoogle
 export const loginWithGoogle = async () => {
   try {
-    account.createOAuth2Session(OAuthProvider.Google);
+    await account.createOAuth2Session(
+      OAuthProvider.Google,
+      `${window.location.origin}/`
+    );
+    // After login, Appwrite will redirect to "/"
   } catch (e) {
-    console.log("message :loginWithGoogle", e);
+    console.log("loginWithGoogle error:");
   }
 };
 
@@ -70,7 +74,7 @@ export const getProfilePicture = async () => {
       data.photos && data.photos.length > 0 ? data.photos[0].url : null;
     return photoUrl;
   } catch (e) {
-    console.log("google profile fetch error", e);
+    console.log("google profile fetch error");
   }
 };
 
@@ -100,7 +104,6 @@ export const storeUserdata = async () => {
         email: user.email,
         name: user.name,
         imageUrl: imageUrl || "",
-        createdAt: user.$createdAt,
       }
     );
     return newUser;
@@ -122,7 +125,7 @@ export const getExistingUser = async () => {
     if (documents.length === 0) return null;
     return documents[0];
   } catch (e) {
-    console.log("getexitinguser error", e);
+    console.log("getexitinguser error");
     return null;
   }
 };

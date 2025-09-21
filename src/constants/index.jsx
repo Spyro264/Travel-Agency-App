@@ -11,6 +11,7 @@ import sample1 from "../assets/images/sample1.jpg";
 import sample2 from "../assets/images/sample2.jpg";
 import sample3 from "../assets/images/sample3.jpg";
 import sample4 from "../assets/images/sample4.jpg";
+import { storeUserdata } from "../appwrite/auth";
 
 // side bar items
 export const side_bar_items = [
@@ -19,10 +20,13 @@ export const side_bar_items = [
   { name: "AI Trips", Icon: <MapIcon /> },
 ];
 
+const user = await storeUserdata();
+console.log({ user });
+
 // page header info.
 export const pageInfo = [
   {
-    message1: "Welcome Nagaraj",
+    message1: `Welcome ${user.name}`,
     message2: " Track activity,trends and popular destinations in real time.",
     path: "/",
   },
