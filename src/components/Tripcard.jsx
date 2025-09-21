@@ -22,7 +22,7 @@ const Tripcard = () => {
                 style={{
                   objectFit: "cover",
                   width: "100%",
-                  height: "200px",
+                  height: "300px",
                   borderRadius: "8px 8px 0 0",
                 }}
               />
@@ -36,12 +36,7 @@ const Tripcard = () => {
               flexDirection="column"
               gap={1}
             >
-              <Typography
-                variant="h6"
-                fontWeight={900}
-                mb={0}
-                // border={"2px solid red"}
-              >
+              <Typography variant="h6" fontWeight={900} mb={0}>
                 {item.title}
               </Typography>
               <Typography color="grey" m={0} p={0}>
